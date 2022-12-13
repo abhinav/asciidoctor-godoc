@@ -12,7 +12,9 @@ end
 
 desc "Generates the GitHub Pages website"
 task :site do
-  Asciidoctor.convert_file "README.adoc",
+  $LOAD_PATH.unshift File.expand_path("./lib", __dir__)
+  require "asciidoctor/godoc"
+  Asciidoctor.convert_file "docs/home.adoc",
                            to_file: "_site/index.html",
                            standalone: true,
                            mkdirs: true,
