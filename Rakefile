@@ -2,11 +2,24 @@
 
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "asciidoctor"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
   t.libs << "lib"
   t.test_files = FileList["test/**/test_*.rb"]
+end
+
+task :site do
+  Asciidoctor.convert_file "README.adoc",
+    to_file: '_site/index.html',
+    standalone: true,
+    mkdirs: true,
+    safe: :safe,
+    attributes: {
+      'source-highlighter' => 'rouge',
+      'reproducible' => 'true',
+    }
 end
 
 require "rubocop/rake_task"
