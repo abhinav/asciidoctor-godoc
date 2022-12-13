@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
     a 'godoc' macro to asciidoc documents. \
     This extension allows referencing Go entities in asciidoc documents, \
     linking to their documentation on https://pkg.go.dev."
-  spec.homepage = "https://github.com/abhinav/asciidoctor-godoc"
+  spec.homepage = "https://abhinav.github.io/asciidoctor-godoc/"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
