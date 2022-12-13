@@ -2,6 +2,8 @@
 :toc:
 :url-godoc: https://pkg.go.dev
 
+image:https://badge.fury.io/rb/asciidoctor-godoc.svg["Gem Version", link="https://badge.fury.io/rb/asciidoctor-godoc"]
+
 An asciidoctor extension that adds support for a `godoc` macro.
 The macro allows you to reference types and functions in a Go package by name,
 and links to their documentation on {url-godoc}[pkg.go.dev].
