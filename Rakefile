@@ -10,16 +10,17 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList["test/**/test_*.rb"]
 end
 
+desc "Generates the GitHub Pages website"
 task :site do
   Asciidoctor.convert_file "README.adoc",
-    to_file: '_site/index.html',
-    standalone: true,
-    mkdirs: true,
-    safe: :safe,
-    attributes: {
-      'source-highlighter' => 'rouge',
-      'reproducible' => 'true',
-    }
+                           to_file: "_site/index.html",
+                           standalone: true,
+                           mkdirs: true,
+                           safe: :safe,
+                           attributes: {
+                             "source-highlighter" => "rouge",
+                             "reproducible" => "true"
+                           }
 end
 
 require "rubocop/rake_task"

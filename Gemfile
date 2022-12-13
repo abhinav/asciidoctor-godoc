@@ -14,4 +14,4 @@ group :test do
   gem "minitest", "~> 5.16"
 end
 
-gem "rouge", "~> 4.0", :group => :docs
+gem "rouge", "~> 4.0", group: :docs
