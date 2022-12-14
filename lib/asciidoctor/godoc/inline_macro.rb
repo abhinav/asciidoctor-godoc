@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-require "asciidoctor"
-require "asciidoctor/extensions"
+unless RUBY_ENGINE == 'opal'
+  require "asciidoctor"
+  require "asciidoctor/extensions"
+end
 
 module Asciidoctor
   module Godoc

@@ -1,0 +1,18 @@
+{
+  "name": "asciidoctor-godoc",
+  "version": "0.1.0",
+  "description": "An Asciidoctor.js extension to add a 'godoc' macro.",
+  "main": "lib/index.js",
+  "repository": "https://github.com/abhinav/asciidoctor-godoc",
+  "author": "Abhinav Gupta",
+  "license": "MIT",
+  "devDependencies": {
+    "asciidoctor": "^2.2.6",
+    "mocha": "^10.2.0",
+    "opal-compiler": "^1.0.13"
+  },
+  "scripts": {
+    "build": "node npm/transpile.js",
+    "test": "mocha"
+  }
+}
