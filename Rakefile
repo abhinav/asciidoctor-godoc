@@ -21,7 +21,8 @@ task :site do
                            safe: :safe,
                            attributes: {
                              "source-highlighter" => "rouge",
-                             "reproducible" => "true"
+                             "reproducible" => "true",
+                             "icons" => "font"
                            }
 end
 
