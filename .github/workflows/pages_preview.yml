@@ -42,11 +42,18 @@ jobs:
         id: publish
         with:
           command: up
-          stack-name: dev # When using an individual account, only use stack-name.
+          stack-name: asciidoctor-godoc-pr-preview-${{ github.event.pull_request.number }}
           comment-on-pr: true
           work-dir: preview
+          upsert: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Upload stack configuration
+        uses: actions/upload-artifact@v3
+        with:
+          name: pulumi-stack-yaml
+          path: preview/Pulumi.asciidoctor-godoc-pr-preview-${{ github.event.pull_request.number }}.yaml
 
       - uses: peter-evans/create-or-update-comment@v2
         with:
@@ -77,12 +84,20 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      - name: Download stack configuration
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          pr: ${{ github.event.pull_request.number }}
+          name: pulumi-stack-yaml
+          path: preview
+
       - name: Destroy preview
         uses: pulumi/actions@v3
         with:
           command: destroy
-          stack-name: dev
+          stack-name: asciidoctor-godoc-pr-preview-${{ github.event.pull_request.number }}
           comment-on-pr: true
           work-dir: preview
+          remove: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
