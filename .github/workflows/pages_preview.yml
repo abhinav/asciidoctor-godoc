@@ -1,0 +1,88 @@
+name: Preview GitHub Pages
+
+on:
+  pull_request:
+    types: [opened, synchronize, closed]
+
+jobs:
+  create-preview:
+    name: Create preview
+    if: github.event.action == 'opened' || github.event.action == 'synchronize'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19.x
+      - run: go mod download
+        working-directory: preview
+
+      - name: Generate site
+        run:
+          bundle exec rake site
+
+      - name: Publish preview
+        uses: pulumi/actions@v3
+        id: publish
+        with:
+          command: up
+          stack-name: dev # When using an individual account, only use stack-name.
+          comment-on-pr: true
+          work-dir: preview
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            Uploaded preview to: <${{ steps.publish.outputs.endpoint }}>
+
+  delete-preview:
+    name: Delete preview
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19.x
+      - run: go mod download
+        working-directory: preview
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Destroy preview
+        uses: pulumi/actions@v3
+        with:
+          command: destroy
+          stack-name: dev
+          comment-on-pr: true
+          work-dir: preview
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
