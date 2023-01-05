@@ -47,7 +47,7 @@ func main() {
 
 		// Export the name of the bucket
 		ctx.Export("bucket", bucket.ID())
-		ctx.Export("endpoint", pulumi.Sprintf("https://%s", bucket.WebsiteEndpoint))
+		ctx.Export("endpoint", pulumi.Sprintf("http://%s", bucket.WebsiteEndpoint))
 		return nil
 	})
 }
