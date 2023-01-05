@@ -98,6 +98,8 @@ jobs:
           stack-name: pr-${{ github.event.pull_request.number }}
           comment-on-pr: true
           work-dir: preview
-          remove: true
+          # remove: true # Not yet released
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      - name: Delete stack
+        run: pulumi stack rm -y --stack abhinav/asciidoctor-godoc-preview/pr-${{ github.event.pull_request.number }}
