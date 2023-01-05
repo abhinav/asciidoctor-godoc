@@ -1,0 +1,3 @@
+name: asciidoctor-godoc-preview
+runtime: go
+description: Generates a preview of GitHub Pages for the project.
