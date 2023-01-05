@@ -2,12 +2,15 @@ name: Preview GitHub Pages
 
 on:
   pull_request:
-    types: [opened, synchronize, closed]
+    types: [opened, synchronize, closed, reopened]
 
 jobs:
   create-preview:
     name: Create preview
-    if: github.event.action == 'opened' || github.event.action == 'synchronize'
+    if: >
+      github.event.action == 'opened'
+      || github.event.action == 'synchronize'
+      || github.event.action == 'reopened'
     runs-on: ubuntu-latest
 
     steps:
