@@ -30,7 +30,7 @@ jobs:
           bundle exec rake site
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
 
   deploy:
     needs: build
