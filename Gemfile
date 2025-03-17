@@ -5,7 +5,7 @@ source "https://rubygems.org"
 gemspec
 
 group :lint do
-  gem "rubocop", "~> 1.73.0", require: false
+  gem "rubocop", "~> 1.74.0", require: false
   gem "rubocop-minitest", "~> 0.37.0"
   gem "rubocop-rake", "~> 0.7.0", require: false
 end
