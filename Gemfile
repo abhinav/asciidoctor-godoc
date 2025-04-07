@@ -6,7 +6,7 @@ gemspec
 
 group :lint do
   gem "rubocop", "~> 1.75.0", require: false
-  gem "rubocop-minitest", "~> 0.37.0"
+  gem "rubocop-minitest", "~> 0.38.0"
   gem "rubocop-rake", "~> 0.7.0", require: false
 end
 
